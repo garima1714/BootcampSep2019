@@ -1,6 +1,6 @@
 
 var ab = "O";
-
+var count =0;
   
 function reset1() {
     var b1 = document.getElementById("1");
@@ -56,6 +56,7 @@ function buttonn() {
     b7.disabled = true;
     b8.disabled = true;
     b9.disabled = true;
+
 }
 
 function popupz(gewinner) {
@@ -70,6 +71,7 @@ function popupz(gewinner) {
       pop.style.visibility = "visible";
       overlay.style.visibility ="visible"
 }
+
 
 function check() {
     
@@ -114,7 +116,9 @@ function check() {
     else if (((b7=="X") || (b7=="O")) && ((b7 == b5) && (b5 == b3))){
       popupz(b7);
     }
-
+   else if(count == 9){
+    alert("draw");
+   }
     }
 
 
@@ -123,46 +127,55 @@ function setzen(x, ab) {
      var button = document.getElementById("1");
      button.value = ab;
      button.disabled=true;
+     count++;
      }
      else if (x==2) {
      var button = document.getElementById("2");
      button.value = ab;
      button.disabled=true;
+     count++;
      }
      else if (x==3) {
      var button = document.getElementById("3");
      button.value = ab;
      button.disabled=true;
+     count++;
      }
      else if (x==4) {
      var button = document.getElementById("4");
      button.value = ab;
      button.disabled=true;
+     count++;
      }
      else if (x==5) {
      var button = document.getElementById("5");
      button.value = ab;
      button.disabled=true;
+     count++:
      }
      else if (x==6) {
      var button = document.getElementById("6");
      button.value = ab;
      button.disabled=true;
+     count++:
      }
      else if (x==7) {
      var button = document.getElementById("7");
      button.value = ab;
      button.disabled=true;
+     count++;
      }
      else if (x==8) {
      var button = document.getElementById("8");
      button.value = ab;
      button.disabled=true;
+     count++;
      }
      else if (x==9) {
      var button = document.getElementById("9");
      button.value = ab;
      button.disabled=true;
+     count++;
      }
      check();
      }
@@ -177,4 +190,9 @@ function xoo(button) {
     ab="X";
     setzen(button, ab);
     }
+    else if(count ==9)
+    {
+    alert("Draw");
+    } 
     }
+

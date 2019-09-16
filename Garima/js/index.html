@@ -8,7 +8,15 @@
   </head>
   <body>
   <script src="tic.js"></script>
-
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js">
+  </script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("button").click(function(){
+            location.reload(true);
+        });
+    });
+</script>
   <center>
   <header>
   <h1>TIC TAC TOE</h1>
@@ -17,7 +25,11 @@
   <br />
   <br />
   <br />
-  
+  <br />
+  <br />
+  <br />
+  <br />
+
   <table>
   <tr>
   <td><input type="button" id="1" onclick="xoo(1)" value=""/></td>
@@ -37,7 +49,7 @@
   </table>
   <br><br>
   <button onclick="reset1()">Reset</button>
-  
+
   <section align="center" id="popup">
   <p id="text">text</p>
   <button id="popupbutton" onclick="reset1()">Ok</button>

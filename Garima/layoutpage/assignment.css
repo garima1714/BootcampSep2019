@@ -1,0 +1,171 @@
+* {box-sizing: border-box;}
+
+body { 
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#navbar {
+  overflow: hidden;
+  background-color: white;
+  padding: 10px 10px;
+  cursor: pointer;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 99;
+}
+
+#navbar a {
+  float: left;
+  color: black;
+  text-align: center;
+  padding: 10px;
+  text-decoration: none;
+  font-size: 16px; 
+  line-height: 25px;
+  border-radius: 4px;
+}
+
+#navbar #logo {
+  font-size: 20px;
+  padding-left:80px;
+  font-weight: bold;
+  
+}
+
+#navbar a:hover {
+ 
+  color: black;
+}
+
+
+
+#navbar-right {
+  float: right;
+}
+
+@media screen and (max-width: 580px) {
+  #navbar {
+    padding: 20px 10px !important;
+  }
+  #navbar a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+  #navbar-right {
+    float: none;
+  }
+}
+
+.container{
+  height: 890px;
+  width: 100%;
+  background-color: blue;
+  color: white;
+  padding-top: -100px;
+  float: left;
+}
+.containerstyling{
+  font-size: 15px;
+
+}
+.cart{
+  height: 50px;
+  width: 170px;
+
+}
+.third_part{
+  padding-left: 90px;
+  padding-right: 60%;
+  margin-top: 900px;
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  margin-left: 100px;
+  text-align: center;
+  font-family: arial;
+  float: left;
+  border-radius: 20px;
+  background-color: white;
+}
+
+.price {
+  color: grey;
+  font-size: 22px;
+}
+
+.card button {
+  border: none;
+  outline: 0;
+  padding: 12px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+}
+
+.card button:hover {
+  opacity: 0.7;
+}
+
+  hr {
+    position: relative;
+    left: 0;
+    width: 100%;
+    border-top-color: rgba(0,0,0,.12);
+    display: block;
+    margin: 0;
+    border-top-width: 2px;
+    border-top-style: solid;
+  }
+  .forth{
+    background-color: #f5f5f0;
+    height: 600px;
+    
+    margin-top: 700px;
+  }
+  .card2{
+    padding-left: 70px;
+    padding-right: 550px;
+  }
+  .card4{
+     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  margin-left: 100px;
+  text-align: center;
+  font-family: arial;
+  float: left;
+  background-color: white;
+
+  }
+  .card4 img{
+    max-width: 20%;
+    border-radius: 50%;
+    margin-left: -200px;
+
+
+  }
+  .container2{
+    padding-left: 120px;
+  padding-right: 60%;
+  margin-top: 50px;
+  }
+
+  .card5{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  margin-left: 90px;
+  text-align: center;
+  font-family: arial;
+  float: left;
+  border-radius: 20px;
+  background-color: white; 
+  float: left;
+  height: 200px;
+  }
