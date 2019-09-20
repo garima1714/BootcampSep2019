@@ -29,7 +29,7 @@ namespace Assignment.Controllers
            var m = dc.Product.Find(id);
            return m;
          }
-
+        
        public void Post([FromBody]Product value)
         {
             dc.Product.Add(value);
@@ -37,16 +37,16 @@ namespace Assignment.Controllers
         }
 
         [HttpPut("{id}")]
-        public Product Put(int id, [FromBody]string name)
+        public Product Put([FromBody]Product pname, int id)
         {
             var obj1 = dc.Product.Where(n => n.Pid == id).SingleOrDefault();
             if (obj1 != null)
             {
                 obj1.Pid = id;
-                obj1.Pname = name;
+                obj1.Pname = pname.Pname;
                 dc.SaveChanges();
             }
-            
+            return obj1;
         }
 
         [ HttpDelete("{id}")]

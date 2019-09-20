@@ -9,7 +9,6 @@ namespace Assignment.Models
         public int? Bid { get; set; }
         public string Bname { get; set; }
 
-        public virtual Brand P { get; set; }
-        public virtual Brand InverseP { get; set; }
+        public virtual Orders B { get; set; }
     }
 }

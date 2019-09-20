@@ -25,7 +25,7 @@ namespace Assignment.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer(@"Server=CYG365;Database=project;Trusted_connection=true;");
+                optionsBuilder.UseSqlServer(@"Server=CYG365;Database=project;Trusted_Connection=true;");
             }
         }
 
@@ -50,11 +50,10 @@ namespace Assignment.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.HasOne(d => d.P)
-                    .WithOne(p => p.InverseP)
-                    .HasForeignKey<Brand>(d => d.Pid)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_brand_brand");
+                entity.HasOne(d => d.B)
+                    .WithMany(p => p.Brand)
+                    .HasForeignKey(d => d.Bid)
+                    .HasConstraintName("FK_brand_order");
             });
 
             modelBuilder.Entity<Orders>(entity =>
