@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="signup.css">
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="http://cdn.jsdelivr.net/json2/0.1/json2.js"></script>
+    </head>
+<body>
+
+<form style="border:1px solid #ccc">
+  <div class="container">
+    
+
+    <label for="name"><b>Name</b></label>
+    <input type="text" id="txtname" placeholder="Enter Name" name="name" required>
+
+
+    <label for="email"><b>Email</b></label>
+    <input type="text" id="txtemail" placeholder="Enter Email" name="email" required>
+
+    <label for="psw"><b>Password</b></label>
+    <input type="password" id="txtpwd" placeholder="Enter Password" name="psw" required>
+
+    <label for="psw-repeat"><b>Repeat Password</b></label>
+    <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
+    
+    <label for="college_name"><b>College Name</b></label>
+    <input type="text" id="txtclgname" placeholder="Enter College Name" name="college_name" required>
+
+    <label for="college_id"><b>College Id</b></label>
+    <input type="text" id="txtclgid" placeholder="Enter College Id" name="college_id" required>
+
+
+    <div class="clearfix">
+      <button  class="cancelbtn" type="button">Cancel</button>
+      <button  id="btnSave" class="signupbtn" type="button">Sign Up</button>
+    </div>
+  </div>
+</form>
+
+</body>
+
+
+<script type="text/javascript">
+$(document).ready( function(){
+    $('#btnSave').click( function(){
+        var user_name = document.getElementById("txtname").value;
+        var email = document.getElementById("txtemail").value;
+        var password = document.getElementById("txtpwd").value;
+        var college_name = document.getElementById("txtclgname").value;
+        var college_id = document.getElementById("txtclgid").value;
+         console.log(college_name+' '+college_id);
+        
+        $.ajax("http://localhost:60534/api/values",{
+            type:"POST",
+            dataType: "json",
+            contentType: "application/json",
+            data:JSON.stringify(
+                {  
+                    "email" : email,
+                    "username" : user_name,
+                    "password" : password,
+                    "collegename": college_name,
+                    "collegeid" : college_id
+                    
+                }
+            ),
+            success:function(data, status){
+                console.log("Hello", data, status);
+               
+                // window.open("index.html");
+            },
+            error: function(){
+               
+                alert('something went worng');
+            }
+        });
+    });
+});
+</script>
+
+</html>

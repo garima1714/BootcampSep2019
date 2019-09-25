@@ -1,0 +1,94 @@
+body
+  {
+  	margin: 0px;
+    background-image: url("b2.jpg");
+  }
+ .main
+  {
+  	position:relative;
+  	top:70px;
+   	left:400px;
+   	width:600px;
+  	height:475px;
+  	background-color:#c6ffb3;
+  	padding:20px;
+   	box-sizing:border-box;
+    margin-top: 0;
+  } 
+ .main
+  {
+  opacity: 0.5;
+  filter: alpha(opacity=50); 
+  }
+
+input[type=submit]
+ {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  float: center;
+}
+input[type=text], select, textarea {
+  width:60%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+  input[type=password], select, textarea {
+  width: 60%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+  }
+  .btn
+       {
+       	width: 50%;
+		background-color:dodgerblue;
+		color: white;
+		border: none;
+		padding: 12px 24px;
+               
+		cursor: pointer;
+        float: left;
+       }
+       .btn:hover
+       {
+       	transition-duration:1s;
+       	transform:translate(0px,-5px);
+       	box-shadow:0px 10px 30px black;              
+       }
+       .btnn{
+text-align: left;
+padding: 12px 24px;
+}
+button[type=submit] {
+width:35%;
+background: #f47721;
+outline: none;
+color: #fff;
+font-size: 13px;
+border: none;
+padding: 14px 6px;
+letter-spacing: 1px;
+text-transform: uppercase;
+cursor: pointer;
+transition: 0.5s all;
+}
+button[type=submit]:hover{background:#000;
+color:#fff;}
+.form{
+    margin-top: 0px;
+    
+}
+.dropdown{
+     width:65%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
