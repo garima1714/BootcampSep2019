@@ -55,20 +55,21 @@
                   "username" : user_name,
                   "password" : password,
                 },
-                data:JSON.stringify(
-                {  
-                    "username" : user_name,
-                    "password" : password,
-                }
-                
-            ),
+            //     data:JSON.stringify(
+            //     {  
+            //         "username" : user_name,
+            //         "password" : password,
+            //     }
+            // ),
+
             success:function(headers, status){
                 console.log("Hello", headers, status);
-               window.open("C:/Users/garima.sharma/Desktop/BootcampSep2019/Garima/AuthSession/frontend/signup.html");
+                localStorage.setItem('token', headers.token)
+               window.open("sample.html");
                 
             },
             error: function(obj){
-               console.log(obj);
+               console.log("error");
                 alert( obj.responseText);
             }
             });
