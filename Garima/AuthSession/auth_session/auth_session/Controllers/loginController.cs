@@ -2,15 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using auth_session.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace auth_session.Controllers
 {
-    [Produces("application/json")]
     [Route("api/login")]
     public class loginController : Controller
     {
+
+        private readonly auth_sessionContext db;
+        public loginController(auth_sessionContext _context)
+        {
+            db = _context;
+        }
         // GET: api/login
         [HttpGet]
         public IEnumerable<string> Get()
@@ -27,8 +33,27 @@ namespace auth_session.Controllers
         
         // POST: api/login
         [HttpPost]
-        public void Post([FromBody]string value)
+        //[Route(")]
+        public IActionResult Post([FromBody]Signup value)
         {
+            
+            //var obj = db.Signup.FirstOrDefault(a => a.Username == value.Username);
+            
+            try
+            {
+                var obj = db.Signup.FirstOrDefault(a => a.Username == value.Username);
+                if (obj.Username == value.Username && obj.Password == value.Password)
+                {
+                    return Ok("user found");
+                }
+                return Unauthorized();
+            }
+            catch (Exception E)
+            {
+                return Unauthorized();
+            }
+           
+                    
         }
         
         // PUT: api/login/5
