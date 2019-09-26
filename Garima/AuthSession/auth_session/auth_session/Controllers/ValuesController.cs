@@ -12,6 +12,7 @@ namespace auth_session.Controllers
     {
         
         private readonly auth_sessionContext dc;
+        private String hashedPassword;
         public ValuesController(auth_sessionContext context)
         {
             dc = context;
@@ -37,6 +38,8 @@ namespace auth_session.Controllers
         {
             try
             {
+                hashedPassword = BCrypt.Net.BCrypt.HashPassword(value.Password);
+                value.Password = hashedPassword;
                 dc.Signup.Add(value);
                 dc.SaveChanges();
                 return Ok(value);

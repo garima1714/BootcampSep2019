@@ -20,9 +20,10 @@ namespace auth_session.Controllers
         }
         // GET: api/login
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<Signup> Get()
         {
-            return new string[] { "value1", "value2" };
+            var a = db.Signup.ToList();
+            return a;
         }
 
         // GET: api/login/5
@@ -31,7 +32,7 @@ namespace auth_session.Controllers
         {
             return "value";
         }
-        
+
         // POST: api/login
         [HttpPost]
         //[Route(")]
@@ -52,22 +53,63 @@ namespace auth_session.Controllers
         //        return Unauthorized();
         //    }
         //}
-        public IActionResult POST([FromBody]dynamic loginData)
+
+        //Using headers....
+
+        //public IActionResult POST([FromBody]dynamic loginData)
+        //{
+        //    try
+        //    {
+        //        StringValues _username;
+        //        StringValues _password;
+        //        Request.Headers.TryGetValue("username", out _username);
+        //        Request.Headers.TryGetValue("password", out _password);
+        //        String username = _username.FirstOrDefault();
+        //        String password = _password.FirstOrDefault();
+
+        //        Signup loggedinUser = db.Signup.Find(username);
+        //        try
+        //        {
+        //            if (loggedinUser.Password.Equals(password))
+        //            {
+        //                return Ok(true);
+        //            }
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            return Unauthorized();
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //    }
+        //    return BadRequest();
+        //}
+
+        //Using Hashing.......
+
+        public IActionResult POST([FromBody]Signup value)
         {
             try
             {
+                String hashedPassword;
                 StringValues _username;
                 StringValues _password;
                 Request.Headers.TryGetValue("username", out _username);
                 Request.Headers.TryGetValue("password", out _password);
                 String username = _username.FirstOrDefault();
                 String password = _password.FirstOrDefault();
-
                 Signup loggedinUser = db.Signup.Find(username);
+                hashedPassword = loggedinUser.Password;
+                bool validPassword = BCrypt.Net.BCrypt.Verify(password, hashedPassword);
+                
                 try
                 {
-                    if (loggedinUser.Password.Equals(password))
+                   
+                    if (validPassword == true)
                     {
+                        
                         return Ok(true);
                     }
                 }
@@ -83,12 +125,14 @@ namespace auth_session.Controllers
             return BadRequest();
         }
 
+
+
         // PUT: api/login/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]string value)
         {
         }
-        
+
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public void Delete(int id)
