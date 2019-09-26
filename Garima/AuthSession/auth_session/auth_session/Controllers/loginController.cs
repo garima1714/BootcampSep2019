@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using auth_session.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Primitives;
 
 namespace auth_session.Controllers
 {
@@ -34,28 +35,54 @@ namespace auth_session.Controllers
         // POST: api/login
         [HttpPost]
         //[Route(")]
-        public IActionResult Post([FromBody]Signup value)
+        //public IActionResult Post([FromBody]Signup value)
+        //{
+        //    //var obj = db.Signup.FirstOrDefault(a => a.Username == value.Username);
+        //    try
+        //    {
+        //        var obj = db.Signup.FirstOrDefault(a => a.Username == value.Username);
+        //        if (obj.Username == value.Username && obj.Password == value.Password)
+        //        {
+        //            return Ok("user found");
+        //        }
+        //        return Unauthorized();
+        //    }
+        //    catch (Exception E)
+        //    {
+        //        return Unauthorized();
+        //    }
+        //}
+        public IActionResult POST([FromBody]dynamic loginData)
         {
-            
-            //var obj = db.Signup.FirstOrDefault(a => a.Username == value.Username);
-            
             try
             {
-                var obj = db.Signup.FirstOrDefault(a => a.Username == value.Username);
-                if (obj.Username == value.Username && obj.Password == value.Password)
+                StringValues _username;
+                StringValues _password;
+                Request.Headers.TryGetValue("username", out _username);
+                Request.Headers.TryGetValue("password", out _password);
+                String username = _username.FirstOrDefault();
+                String password = _password.FirstOrDefault();
+
+                Signup loggedinUser = db.Signup.Find(username);
+                try
                 {
-                    return Ok("user found");
+                    if (loggedinUser.Password.Equals(password))
+                    {
+                        return Ok(true);
+                    }
                 }
-                return Unauthorized();
+                catch (Exception ex)
+                {
+                    return Unauthorized();
+                }
             }
-            catch (Exception E)
+            catch (Exception ex)
             {
-                return Unauthorized();
+
             }
-           
-                    
+            return BadRequest();
         }
-        
+
         // PUT: api/login/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]string value)

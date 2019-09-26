@@ -30,7 +30,7 @@
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <div class="btnn">
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <center><button type="submit">Login</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="submit">Forget
+          <center><button type="button" id="savedata">Login</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button">Forget
               Password</button><br>
 </center>
 </form>
@@ -41,24 +41,35 @@
   <script>
     $(document).ready(function () {
         $('#savedata').click(function () {
-            var data = {
-                "username": $("#username").val(),
-                "password": $("#password").val()
-            };
+            
+              var user_name = document.getElementById("username").value;
+              var password = document.getElementById("password").value;
+              console.log(user_name+''+password);
+    
             $.ajax({
-                url: "http://localhost:60534/api/values",
+                url: "http://localhost:60534/api/login",
                 type: "POST",
-                data: JSON.stringify(data),
                 dataType: "json",
                 contentType: "application/json",
-                success:function(data, status){
-                console.log("Hello", data, status);
-               
-                 window.open("signup.html");
+                headers:{
+                  "username" : user_name,
+                  "password" : password,
+                },
+                data:JSON.stringify(
+                {  
+                    "username" : user_name,
+                    "password" : password,
+                }
+                
+            ),
+            success:function(headers, status){
+                console.log("Hello", headers, status);
+               window.open("C:/Users/garima.sharma/Desktop/BootcampSep2019/Garima/AuthSession/frontend/signup.html");
+                
             },
-            error: function(){
-               
-                alert('something went worng');
+            error: function(obj){
+               console.log(obj);
+                alert( obj.responseText);
             }
             });
         });
