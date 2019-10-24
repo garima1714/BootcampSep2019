@@ -13738,11 +13738,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\garima.sharma\\source\\repos\\Assignment\\Assignment\\Assignment.csproj",
+      "projectUniqueName": "C:\\Users\\garima.sharma\\Desktop\\BootcampSep2019\\Garima\\Assignment\\Assignment\\Assignment.csproj",
       "projectName": "Assignment",
-      "projectPath": "C:\\Users\\garima.sharma\\source\\repos\\Assignment\\Assignment\\Assignment.csproj",
+      "projectPath": "C:\\Users\\garima.sharma\\Desktop\\BootcampSep2019\\Garima\\Assignment\\Assignment\\Assignment.csproj",
       "packagesPath": "C:\\Users\\garima.sharma\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\garima.sharma\\source\\repos\\Assignment\\Assignment\\obj\\",
+      "outputPath": "C:\\Users\\garima.sharma\\Desktop\\BootcampSep2019\\Garima\\Assignment\\Assignment\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

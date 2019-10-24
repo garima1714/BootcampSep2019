@@ -13730,11 +13730,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\garima.sharma\\source\\repos\\auth_session\\auth_session\\auth_session.csproj",
+      "projectUniqueName": "C:\\Users\\garima.sharma\\Desktop\\BootcampSep2019\\Garima\\AuthSession\\auth_session\\auth_session\\auth_session.csproj",
       "projectName": "auth_session",
-      "projectPath": "C:\\Users\\garima.sharma\\source\\repos\\auth_session\\auth_session\\auth_session.csproj",
+      "projectPath": "C:\\Users\\garima.sharma\\Desktop\\BootcampSep2019\\Garima\\AuthSession\\auth_session\\auth_session\\auth_session.csproj",
       "packagesPath": "C:\\Users\\garima.sharma\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\garima.sharma\\source\\repos\\auth_session\\auth_session\\obj\\",
+      "outputPath": "C:\\Users\\garima.sharma\\Desktop\\BootcampSep2019\\Garima\\AuthSession\\auth_session\\auth_session\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
