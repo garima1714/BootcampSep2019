@@ -92,13 +92,16 @@ $(document).ready(() => {
             },
             success: function(data) {
                 if (data.msg == 'No Exam') {
-                    alert("Exam Doesnot exist in your account")
+                    alert("Exam Does not exist in your account")
                     return
                 }
                 let parent = $(".exam-detail")
+                console.log(data)
+
                     // load html template to display exam detail
                 $.each(data, (index, values) => {
                     let html = $('#display-exam-detail').html()
+                    values.examStartTime= moment(values.examStartTime).format('LLL');
                     values.index = index
                     parent.append(Mustache.render(html, values))
                 })
