@@ -63,11 +63,13 @@ function showStudents() {
         location.replace("../../index.html")
     }
 
-    $.ajax("http://localhost:45728/examiner/exams", {
+    $.ajax("http://localhost:"+localStorage.getItem('server-port')+"/examiner/exams", {
         type: 'GET',
         dataType: 'JSON',
         headers: {
-            'token': localStorage.getItem('token')
+            'token': localStorage.getItem('token'),
+            'Authorization': 'Bearer '+localStorage.getItem('token')
+
         },
         success: function(data) {
             let i = 0;
@@ -80,7 +82,9 @@ function showStudents() {
                 count++;
             }
         },
-        error: function(error) {}
+        error: function(error) {
+            console.log(error)
+        }
     })
 }
 
@@ -91,7 +95,7 @@ function logout() {
 let flag = 0;
 
 function studentDetails(a) {
-    $.ajax("http://localhost:45728/examiner/exams/students", {
+    $.ajax("http://localhost:"+localStorage.getItem('server-port')+"/examiner/exams/students", {
         type: 'GET',
         dataType: 'JSON',
         headers: {

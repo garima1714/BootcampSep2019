@@ -8,11 +8,13 @@ $(document).ready(function() {
 
 function showEdit() {
     $("#showEditDiv").fadeIn("slow");
-    $.ajax("http://localhost:45728/loggedIn", {
+    $.ajax("http://localhost:"+localStorage.getItem('server-port')+"/loggedIn", {
         type: 'GET',
         dataType: 'JSON',
         headers: {
             "token": localStorage.getItem('token'),
+            'Authorization': 'Bearer '+localStorage.getItem('token')
+
         },
         success: function(data) {
 
@@ -26,14 +28,16 @@ function showEdit() {
 }
 
 function showName() {
-    $.ajax("http://localhost:45728/loggedIn", {
+    $.ajax("http://localhost:"+localStorage.getItem('server-port')+"/loggedIn", {
         type: 'GET',
         dataType: 'JSON',
         headers: {
             "token": localStorage.getItem('token'),
+            'Authorization': 'Bearer '+localStorage.getItem('token')
+
         },
         success: function(data) {
-
+            console.log(data)
             document.getElementById('span').innerHTML = 'Welcome ' + data.name + '! &nbsp; &nbsp; '
             localStorage.setItem("loggedInName", data.name)
         },
@@ -51,26 +55,29 @@ function changeInputFields(data) {
     document.getElementById('loggedInCollege').value = data.collegeName;
 
 }
-
 function editDetails() {
     var email = document.getElementById('loggedInEmail').value
     var name = document.getElementById('loggedInName').value
     var phone = document.getElementById('loggedInPhone').value
     var college = document.getElementById('loggedInCollege').value
     var pass = document.getElementById('loggedInPassword').value
-    $.ajax("http://localhost:45728/examiner", {
+
+    $.ajax("http://localhost:"+localStorage.getItem('server-port')+"/examiner", {
         type: 'PATCH',
-        dataType: 'JSON',
+        dataType: 'JSON',   
         headers: {
             "token": localStorage.getItem('token'),
+             'Authorization': 'Bearer '+localStorage.getItem('token')
+
         },
-        data: ({
+        data: JSON.stringify({
             "email": email,
             "name": name,
             "phoneNumber": phone,
             "collegeName": college,
             "password": pass
         }),
+        
         success: function(data) {
             window.alert('User Details Updated !')
             hideEditDetails()

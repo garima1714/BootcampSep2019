@@ -212,17 +212,17 @@ for (let i = 0; i < users.length; i++) {
     data.save()
 }
 
-for (let i = 0; i < answerDetails.length; i++) {
-    let data = new test(answerDetails[i])
-    data.save()
-}
+// for (let i = 0; i < answerDetails.length; i++) {
+//     let data = new test(answerDetails[i])
+//     data.save()
+// }
 
-for (let i = 0; i < questionDetails.length; i++) {
-    let data = new questionDetail(questionDetails[i])
-    data.save()
-}
+// for (let i = 0; i < questionDetails.length; i++) {
+//     let data = new questionDetail(questionDetails[i])
+//     data.save()
+// }
 
-for (let i = 0; i < examDetails.length; i++) {
-    let data = new examDetail(examDetails[i])
-    data.save()
-}
+// for (let i = 0; i < examDetails.length; i++) {
+//     let data = new examDetail(examDetails[i])
+//     data.save()
+// }

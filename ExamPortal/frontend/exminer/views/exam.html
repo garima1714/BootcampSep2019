@@ -19,7 +19,7 @@
 
 <body onload="showName()">
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color: black;">
-        <img src="../../user/public/assets/cybergrouplogo.png" class="logo">
+        <img src="../../user/public/assets/cybergrouplogo.png" class="logo" style="width: 12%;">
         <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -90,7 +90,7 @@
                 <p>{{examCode}}</p>
             </div>
             <div class="col-md-2">
-                <p>{{examDuration}}</p>
+                <p>{{examDuration}} minutes</p>
             </div>
             <div class="col-md-2">
                 <p>{{examStartTime}}</p>
@@ -126,9 +126,13 @@
                     <label for="addExamDuration">Exam Duration</label>
                     <input type="text" class="form-control" id="addExamDuration" aria-describedby="emailHelp" placeholder="Enter Exam Duration" value="{{examDuration}}">
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label for="addExamDate">Exam Date and Time</label>
                     <input type="text" class="form-control" id="addExamDate" aria-describedby="emailHelp" placeholder="Enter Exam Date" value="{{examStartTime}}">
+                </div> -->
+                <div class="form-group">
+                    <label class="addExamDate">Exam Date</label>
+                    <input type="datetime-local" name="bdaytime" id="addExamDate" value="{{examStartTime}}">
                 </div>
                 <!-- <div class="form-group">
                     <label for="addExamInstruction">Exam Instruction</label>

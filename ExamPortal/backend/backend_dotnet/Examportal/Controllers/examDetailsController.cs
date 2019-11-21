@@ -86,7 +86,7 @@ namespace Examportal.Controllers
                     examCode = a.ExamCode,
                     examDuration = a.ExamDuration,
                     examStartTime = a.ExamStartTime
-                }).ToList();
+                }).FirstOrDefault();
                 return Ok(data);
             }catch(Exception e)
             {
@@ -110,10 +110,10 @@ namespace Examportal.Controllers
                 data.ModifiedDate = DateTime.Now;
 
                 Users obj = db.Users.FirstOrDefault(e => e.Email == email["Email"]);
-                data.ModifiedBy = obj.Name;
+                //data.ModifiedBy = obj.Name;
 
                 db.SaveChanges();
-                return Ok();
+                return Ok(new { message = "Exams Details Updated" });
             }catch(Exception e)
             {
                 return BadRequest(new { error = e });

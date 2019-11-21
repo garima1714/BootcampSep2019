@@ -53,16 +53,60 @@ $(document).ready(function () {
 
 $(document).ready(function () {
     //     $('.loader').hide()
+//     let today = new Date().toISOString().substr(0, 10);
+// document.querySelector("#today").value = today;
+
+// document.querySelector("#addExamTestDate").valueAsDate = new Date();
+
     document.getElementById('btnSave').addEventListener('click', validateForm)
     function validateForm() {
         var testName = document.getElementById("addExamName").value;
         var testCode = document.getElementById("addExamCode").value;
         var testDuration = document.getElementById("addExamDuration").value;
         var testDate = document.getElementById("addExamTestDate").value;
-        if (testName === '' || testCode == '' || testDuration == '' || testDate == '') {
-            alert("Please fill all the fields")
-            return
+        // if (testName === '' || testCode == '' || testDuration == '' || testDate == '') {
+        //     alert("Please fill all the fields")
+        //     return
+        // }
+         let flag = 0;
+        var regex1 = /^[a-zA-Z ]{1,30}$/;
+        var numbers = /^[0-9]+$/;
+        if (testName == "") {
+            alert("Please enter test Name")
+            flag=1;
         }
+
+        else if(regex1.test($("#addExamName").val()) == false){
+            // console.log("hi")
+            alert("Please enter test Name")
+            flag=1;
+        }
+        else if (testCode == "") {
+            alert("Please enter test code")
+            flag=1;
+        }
+
+        else if(regex1.test($("#addExamCode").val()) == false){
+            // console.log("hi")
+            alert("Please enter test code")
+            flag=1;
+        }
+        
+        else if (testDuration == "") {
+         alert("Please enter test duration")
+         flag=1;
+        }
+
+        else if(numbers.test($("#addExamDuration").val()) == false){
+            // console.log("hi")
+            alert("Please enter test duration")
+            flag=1;
+        }
+        else if (testDate == "") {
+            alert("Please enter exam date")
+            flag=1;
+        }
+        else if(flag==0){  
         const testD = testDate.slice(0, 10);
         const testd = testDate.slice(11, 16)
         testDate = testD.concat(" " + testd + ":00")
@@ -73,7 +117,7 @@ $(document).ready(function () {
             examDuration: testDuration,
             examStartTime: testDate
         }
-        $.ajax("http://localhost:45728/exam", {
+        $.ajax("http://localhost:"+localStorage.getItem('server-port')+"/exam", {
             type: "POST",
             dataType: "json",
             headers: {
@@ -99,9 +143,11 @@ $(document).ready(function () {
             }
         })
     }
+    }
 })
 
 $(document).ready(function () {
+
     document.getElementById('submitBtn').addEventListener('click', validateForm)
 
     function validateForm() {
@@ -169,7 +215,7 @@ $(document).ready(function () {
         formData.append('examCode', tempExamCode);
         formData.append('answerType', answerType);
         formData.append('questionImage', $('input[type=file]')[1].files[0]);
-        $.ajax("http://localhost:45728/exam/question", {
+        $.ajax("http://localhost:"+localStorage.getItem('server-port')+"/exam/question", {
             type: "POST",
             data: formData,
             dataType: "json",
@@ -216,10 +262,11 @@ $(document).ready(function () {
 function excelUpload(event) {
  
     event.preventDefault();
-    //tempExamCode1 = $('#addExamCode').val()
     var formData = new FormData();
     formData.append('examCode', tempExamCode)
+    console.log(tempExamCode);
     formData.append('excelFile', $('input[type=file]')[0].files[0])
+    console.log(formData.get('excelFile'));
     $.ajax('http://localhost:45728/exam/questions/uploadExcel', {
         type: 'POST',
         data: formData,
@@ -228,7 +275,7 @@ function excelUpload(event) {
             Authorization: "Bearer "+localStorage.getItem('token')
         },
         lowerCaseHeaders: true,
-        contentType: false,
+        contentType:false,
         processData: false,
         success: function (data) {
             alert("You have successfully uploaded the questions through excel file")
@@ -243,6 +290,6 @@ function excelUpload(event) {
 
 function submitAllBtn() {
 
-    location.replace("./exam.html")
+    location.replace("./questions.html")
 
 }
