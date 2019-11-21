@@ -25,12 +25,20 @@ $(document).on('click', '#loginButton', function() {
                 }
             },
             error: function(data) {
+                $('.main').animate({ opacity: 1 })
+                $('.mod').fadeOut()
                 $('.spinner').hide()
+                $('#alert-box').show();
+                
                 console.log(data)
-                window.alert(data.responseJSON.message)
-                location.reload();
+                // window.alert(data.responseJSON.message)
+               
             }
 
         })
     })
     // })
+    $(document).on('click', '.close', function() {
+        location.reload();
+
+    })

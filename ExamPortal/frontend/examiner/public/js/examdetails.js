@@ -70,6 +70,7 @@ $(document).ready(function () {
         // }
          let flag = 0;
         var regex1 = /^[a-zA-Z ]{1,30}$/;
+        var regex = /^[A-Za-z0-9 ]{1,30}$/;
         var numbers = /^[0-9]+$/;
         if (testName == "") {
             alert("Please enter test Name")
@@ -86,7 +87,7 @@ $(document).ready(function () {
             flag=1;
         }
 
-        else if(regex1.test($("#addExamCode").val()) == false){
+        else if(regex.test($("#addExamCode").val()) == false){
             // console.log("hi")
             alert("Please enter test code")
             flag=1;
