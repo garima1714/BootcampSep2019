@@ -6,7 +6,7 @@ $(document).ready(function () {
         var PhoneNumber = $("#phoneNumber").val()
         var Password = $("#inputPassword").val()
         confirmPassword = $("#cnfPassword").val()
-        var accountType = "Admin"
+        var accountType = "Student"
 
 
         if (firstName == "") {

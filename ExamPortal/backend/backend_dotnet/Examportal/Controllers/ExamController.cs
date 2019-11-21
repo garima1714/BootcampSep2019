@@ -50,8 +50,16 @@ namespace Examportal.Controllers
             string examcode = HttpContext.Request.Headers["examCode"];
 
             var examData = db.ExamDetails.FirstOrDefault(s => s.ExamCode == examcode);
-                
-            return Ok(new { examData = examData,submitStatus = false});
+            var submitExam = db.CandidateResult.FirstOrDefault(s=> s.TestCode == examcode && s.Email == header["Email"]);
+            if(submitExam!= null && submitExam.SubmitExam == 1)
+            {
+                return Ok(new { examData = examData, submitStatus = true });
+            }
+            else
+            {
+                return Ok(new { examData = examData, submitStatus = false });
+            }
+            
             
         }
 
@@ -67,7 +75,7 @@ namespace Examportal.Controllers
             email = auth.getAllClaims(HttpContext);
             qh.submitAllQuestions(value,email);
             
-            return Ok();
+            return Ok(true);
         }
         //[Authorize]
         [Route("/exam/question/{id}")]
@@ -232,7 +240,10 @@ namespace Examportal.Controllers
             try
             {
                 // Determine whether the directory exists.
-                if (Directory.Exists(path))
+                DirectoryInfo di = Directory.CreateDirectory(path);
+
+                Console.WriteLine("The directory was created successfully at {0}.", Directory.GetCreationTime(path));
+                //if (Directory.Exists(path))
                 {
 
                     var filePayload = HttpContext.Request.Form.Files[0];
@@ -334,9 +345,8 @@ namespace Examportal.Controllers
                 }
 
                 // create the directory.
-                DirectoryInfo di = Directory.CreateDirectory(path);
+               
 
-                Console.WriteLine("The directory was created successfully at {0}.", Directory.GetCreationTime(path));
             }
             catch (Exception e)
             {

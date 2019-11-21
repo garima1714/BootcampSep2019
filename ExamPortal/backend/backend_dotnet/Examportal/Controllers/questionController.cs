@@ -68,7 +68,7 @@ namespace Examportal.Controllers
             {
                 qh.SaveIncorrectOption(checkAnswer, existingAnswer, email["Email"], value, joinValue);
             }
-            return Ok();
+            return Ok(new { msg="data saved"});
         }
 
     }

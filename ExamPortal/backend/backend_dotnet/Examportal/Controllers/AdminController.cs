@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Examportal.Custom_Models;
-using Examportal.Models;
-using Microsoft.AspNetCore.Http;
+﻿using Examportal.Models;
 using Microsoft.AspNetCore.Mvc;
-using Bcrypt = BCrypt.Net;
+using System;
+using System.Linq;
 
 
 namespace Examportal.Controllers
@@ -20,7 +15,8 @@ namespace Examportal.Controllers
         [HttpGet]
         public IActionResult display()
         {
-            var itm = db.Users.Where(e => e.AccountType == "Examiner").Select(a => new { a.Email, _id = a.Email, a.Name, a.CreatedDate });
+            var itm = db.Users.Where(e => e.AccountType == "Examiner")
+                .Select(a => new { a.Email, _id = a.Email, a.Name, a.CreatedDate });
             return Ok(itm);
         }
 
@@ -32,28 +28,28 @@ namespace Examportal.Controllers
         }
 
         // POST: api/Admin
-        [HttpPost]
-        public IActionResult Post([FromBody] Users value)
-        {
-            var data = (from c in db.Users where c.Email == value.Email select c).FirstOrDefault();
-            if (data != null)
-            {
-                return Ok(new { message = "user already exist" });
-            }
-            else if (data == null)
-            {
-                value.Password = Bcrypt.BCrypt.HashPassword(value.Password);
-                value.CreatedDate = DateTime.Now;
-                db.Users.Add(value);
-                db.SaveChanges();
-                return Ok(true);
-            }
-            else
-            {
-                return BadRequest();
-            }
+        //[HttpPost]
+        //public IActionResult Post([FromBody] Users value)
+        //{
+        //    var data = (from c in db.Users where c.Email == value.Email select c).FirstOrDefault();
+        //    if (data != null)
+        //    {
+        //        return Ok(new { message = "user already exist" });
+        //    }
+        //    else if (data == null)
+        //    {
+        //        value.Password = Bcrypt.BCrypt.HashPassword(value.Password);
+        //        value.CreatedDate = DateTime.Now;
+        //        db.Users.Add(value);
+        //        db.SaveChanges();
+        //        return Ok(true);
+        //    }
+        //    else
+        //    {
+        //        return BadRequest();
+        //    }
 
-        }
+        //}
         // PUT: api/Admin/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
@@ -64,7 +60,7 @@ namespace Examportal.Controllers
         [HttpDelete("{id}")]
         public IActionResult deleteexaminer(String id)
         {
-           // db.Users.Remove(db.Users.FirstOrDefault(e => e.Email == id));
+            // db.Users.Remove(db.Users.FirstOrDefault(e => e.Email == id));
             var data = db.Users.Where(s => s.Email == id).FirstOrDefault();
             db.Users.Remove(data);
             db.SaveChanges();
