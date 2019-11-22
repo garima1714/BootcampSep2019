@@ -298,3 +298,21 @@ option {
     margin-left: 73%;
     
 }
+
+@media (max-width: 576px) {
+    button {
+      width: 50%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .content{
+        font-size: 25px;
+        /* height: 40px; */
+    }
+    button {
+        font:30px;
+        width: 50%;
+        height: 80px;
+      }
+  }
