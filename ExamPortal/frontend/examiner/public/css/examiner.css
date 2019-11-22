@@ -219,6 +219,9 @@ i {
 .flex-1 button {
     width: 80px;
 }
+#loggedInEmail,#loggedInPassword{
+    color: rgba(0, 0, 0, 0.5);
+}
 @media (max-width: 600px) {
     .options-div{
         flex-direction: column;
