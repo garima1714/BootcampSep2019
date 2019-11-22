@@ -201,33 +201,37 @@ namespace Examportal.Controllers
                 string parent = Directory.GetParent(currentpath).ToString();
                 string parentdirectory = Directory.GetParent(parent).ToString();
                 string root = Directory.GetParent(parentdirectory).ToString();
-                string dest = Path.Combine(root, "assets");
-
+                string destination = Path.Combine(root, "frontend");
+                string dest = Path.Combine(destination, "assets");
+                DirectoryInfo di = Directory.CreateDirectory(dest);
                 var file = HttpContext.Request.Form.Files != null && HttpContext.Request.Form.Files.Count() > 0 ? HttpContext.Request.Form.Files[0] : null;
 
                 String imageURL = null;
                 if (file != null)
                 {
-                    if (Directory.Exists(dest))
-                    {
-
-                        var filename = ContentDispositionHeaderValue
-                                          .Parse(file.ContentDisposition)
-                                          .FileName
-                                          .Trim('"');
-                        String date = DateTime.Now.Ticks.ToString();
-                        String imageName = date + file.FileName;
-                        filename = dest + "\\" + date + filename;
-
-                        using (FileStream fs = System.IO.File.Create(filename))
+                    
+                        if (Directory.Exists(dest))
                         {
-                            file.CopyTo(fs);
-                            fs.Flush();
-                        }
-                   
-                        imageURL = "../../../assets/" + imageName;
 
-                    }
+                            var filename = ContentDispositionHeaderValue
+                                              .Parse(file.ContentDisposition)
+                                              .FileName
+                                              .Trim('"');
+                            String date = DateTime.Now.Ticks.ToString();
+                            String imageName = date + file.FileName;
+                            filename = dest + "\\" + date + filename;
+
+                            using (FileStream fs = System.IO.File.Create(filename))
+                            {
+                                file.CopyTo(fs);
+                                fs.Flush();
+                            }
+
+                            imageURL = "../../../assets/" + imageName;
+
+                        }
+                    
+                   
                 }
                 Dictionary<string, string> email = new Dictionary<string, string>();
 

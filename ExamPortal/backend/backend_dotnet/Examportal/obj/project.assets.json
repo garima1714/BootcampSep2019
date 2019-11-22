@@ -13385,23 +13385,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\lakshya.kalia\\.nuget\\packages\\": {},
+    "C:\\Users\\garima.sharma\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\new-branch\\ExamPortal\\backend\\backend_dotnet\\Examportal\\Examportal.csproj",
+      "projectUniqueName": "C:\\Users\\garima.sharma\\Desktop\\new-branch\\ExamPortal\\backend\\backend_dotnet\\Examportal\\Examportal.csproj",
       "projectName": "Examportal",
-      "projectPath": "E:\\new-branch\\ExamPortal\\backend\\backend_dotnet\\Examportal\\Examportal.csproj",
-      "packagesPath": "C:\\Users\\lakshya.kalia\\.nuget\\packages\\",
-      "outputPath": "E:\\new-branch\\ExamPortal\\backend\\backend_dotnet\\Examportal\\obj\\",
+      "projectPath": "C:\\Users\\garima.sharma\\Desktop\\new-branch\\ExamPortal\\backend\\backend_dotnet\\Examportal\\Examportal.csproj",
+      "packagesPath": "C:\\Users\\garima.sharma\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\garima.sharma\\Desktop\\new-branch\\ExamPortal\\backend\\backend_dotnet\\Examportal\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\lakshya.kalia\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\garima.sharma\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

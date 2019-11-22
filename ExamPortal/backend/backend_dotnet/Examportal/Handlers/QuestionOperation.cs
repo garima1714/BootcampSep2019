@@ -38,7 +38,7 @@ namespace Examportal.Handlers
                     option1 = a.Option1,
                     option2 = a.Option2,
                     option3 = a.Option3,
-                    option4 = a.Option3,
+                    option4 = a.Option4,
                     weightage = a.Weightage,
                     answer = a.Answer,
                     questionImage = a.QuestionImage

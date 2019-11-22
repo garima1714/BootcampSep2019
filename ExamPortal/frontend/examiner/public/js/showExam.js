@@ -102,6 +102,7 @@ $(document).ready(() => {
 
                     // load html template to display exam detail
                 $.each(data, (index, values) => {
+                    console.log("lolll"+values.examStartTime)
                     let html = $('#display-exam-detail').html()
                     values.examStartTime= moment(values.examStartTime).format('LLL');
                     values.index = index

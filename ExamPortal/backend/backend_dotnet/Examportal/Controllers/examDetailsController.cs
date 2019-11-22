@@ -16,6 +16,7 @@ namespace Examportal.Controllers
     [Route("[controller]")]
     public class examDetailsController : ControllerBase
     {
+        ExamportalContext db = new ExamportalContext();
         public IConfiguration _config;
         public examDetailsController(IConfiguration config)
         {
@@ -56,7 +57,6 @@ namespace Examportal.Controllers
         [Authorize, HttpPatch,Route("/exam/{id}")]
         public IActionResult EditExamDeatils(int id , [FromBody] ExamDetails val )
         {
-<<<<<<< HEAD
             try
             {
                 Dictionary<string, string> email = new Dictionary<string, string>();
@@ -77,12 +77,10 @@ namespace Examportal.Controllers
             {
                 return BadRequest(new { error = e });
             }
-=======
             SaveExamDetails exam = new SaveExamDetails();
             if (exam.EditExamDetails(id, val, HttpContext))
                 return Ok(new { msg = "update successful", Status = 200 });
             return BadRequest(new { msg = "Not Found", status = 404 });
->>>>>>> upstream/development
         }
         
         [Authorize, HttpDelete,Route("/exam/{id}")]
