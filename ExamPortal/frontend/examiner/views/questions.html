@@ -42,6 +42,7 @@
             </form>
         </div>
     </nav>
+    <!-- <img src="../../../assets/637098860720528932images.jpg" alt=""> -->
     <!-- append view question template -->
     <div class="container question-div-pos" id="mainDiv">
         <div class="row qrow">
@@ -58,7 +59,7 @@
     </script>
   
     <script id="question-template-body" type="text/html">
-        <div class="row">
+        <div class="row fixed">
             <div class="col-md-12 question-div" id="{{_id}}">
                 <h3>Question-{{index}}</h3>
                 <p>{{questionText}}</p>
@@ -168,14 +169,9 @@
     <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog " role="document">
             <div class="modal-content confirm-box">
-                <div class="modal-header">
-                    <!-- <h5 class="modal-title" id="exampleModalLabel">Modal title</h5> -->
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-                </div>
+   
                 <div class="modal-body" id="modalBody">
-                    <h4>You want delete this question?</4>
+                    <h5 style="font-weight: 400;">Are you sure you want delete this question?</h5>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-info" data-dismiss="modal">No</button>

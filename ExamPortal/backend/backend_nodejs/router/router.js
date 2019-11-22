@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 const { SECRET } = require("../config/config")
 const multer = require('multer')
 const path = require('path')
-const reqPath = path.join(__dirname, '../../../frontend/exminer/public/assets');
+const reqPath = path.join(__dirname, '../../../assets');
 var storage = multer.memoryStorage()
 var storage = multer.diskStorage({
     destination: function (req, file, callback) {

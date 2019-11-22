@@ -60,8 +60,7 @@ namespace Examportal.Controllers
         [HttpDelete("{id}")]
         public IActionResult deleteexaminer(String id)
         {
-            // db.Users.Remove(db.Users.FirstOrDefault(e => e.Email == id));
-            var data = db.Users.Where(s => s.Email == id).FirstOrDefault();
+            var data = db.Users.FirstOrDefault(e => e.Email == id);
             db.Users.Remove(data);
             db.SaveChanges();
             return Ok(true);

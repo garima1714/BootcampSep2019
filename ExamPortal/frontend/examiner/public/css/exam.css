@@ -316,3 +316,6 @@ option {
         height: 80px;
       }
   }
+.fixed{
+    display: grid;
+}

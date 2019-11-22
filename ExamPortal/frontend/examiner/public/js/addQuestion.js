@@ -168,7 +168,7 @@ function excelUpload(event) {
     formData.append('examCode', tempExamCode)
     console.log(tempExamCode)
     formData.append('excelFile', $('input[type=file]')[0].files[0])
-    $.ajax('http://localhost:45728/exam/questions/uploadExcel', {
+    $.ajax("http://localhost:"+localStorage.getItem('server-port')+'/exam/questions/uploadExcel', {
         type: 'POST',
         data: formData,
         headers: {

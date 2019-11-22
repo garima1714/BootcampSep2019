@@ -1,43 +1,34 @@
-function deleteexaminer(id)
-{
-  $("#modelid").attr('id',id)
+function deleteexaminer(id) {
+  $("#modelid").attr('id', id)
 }
-function logout()
-{
-   localStorage.removeItem("token");
-   window.location.replace("../../user/views/login.html");
+function logout() {
+  localStorage.removeItem("token");
+  window.location.replace("../../user/views/login.html");
 }
-function samepage()
-{
+function samepage() {
   window.location.replace("../views/adminShowExaminer.html");
 }
 
-function loadSetupExaminerPage(data){
+function loadSetupExaminerPage(data) {
   $('#performance').empty()
-  $.get('./adminSetupExaminer.html',function(template){
-    var rendered = Mustache.render(template,{data:data})
+  $.get('./adminSetupExaminer.html', function (template) {
+    var rendered = Mustache.render(template, { data: data })
     $('#targetPage').html(rendered)
   })
 }
 
 
 $(document).ready(function () {
-  // const tok =localStorage.getItem('token');
-  // if(tok == null)
-  // {
-  //   location.replace("../../index.html")
-  // }
-  //$.ajax('http://localhost:'+localStorage.getItem('server-port')+'/exam/accessKey', {
+
   $.ajax("http://localhost:"+localStorage.getItem('server-port')+"/examiner", {
     type: "GET",
     dataType: 'JSON',
     contentType: "application/json;charset=utf-8",
-    headers:{
+    headers: {
       token: localStorage.getItem('token')
     },
     success: function (recent) {
       display(recent);
-      // console.log(recent);
     },
     error: function (error) {
       console.log(error)
@@ -55,7 +46,7 @@ $(document).ready(function () {
   $(document).on('click', '.deleteButton', function () {
     let id = $(this).attr('id')
     console.log(id);
-    $.ajax("http://localhost:"+localStorage.getItem('server-port')+"/examiner/"+id, {
+    $.ajax("http://localhost:"+localStorage.getItem('server-port')+"/examiner/" + id, {
       type: "DELETE",
       dataType: "json",
       contentType: "application/json",
@@ -77,7 +68,7 @@ $(document).ready(function () {
 
   $(document).on('click', '.viewButton', function () {
     let id = $(this).attr('id')
-    $.ajax("http://127.0.0.1:"+localStorage.getItem('server-port')+"/examiner/id", {
+    $.ajax("http://localhost:"+localStorage.getItem('server-port')+"/examiner/id", {
       type: "GET",
       dataType: "json",
       contentType: "application/json",

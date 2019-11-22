@@ -148,11 +148,8 @@ $(document).ready(function () {
 })
 
 $(document).ready(function () {
-
-    document.getElementById('submitBtn').addEventListener('click', validateForm)
-
-    function validateForm() {
-        // console.log("hello")
+    document.getElementById('submitBtn').addEventListener('click', (event) => {
+            
         var question = document.getElementById("addtestQuestion").value;
         var weightage = document.getElementById("addtestWeightage").value;
         if (question === "") {
@@ -206,9 +203,9 @@ $(document).ready(function () {
         }
         var formData = new FormData();
 
-        formData.append('questionText', question);
-        formData.append('answer', answer);
-        formData.append('option1', option1);
+        formData.append('questionText',question);
+        formData.append('answer',answer);
+        formData.append('option1',option1);
         formData.append('option2', option2);
         formData.append('option3', option3);
         formData.append('option4', option4);
@@ -216,17 +213,18 @@ $(document).ready(function () {
         formData.append('examCode', tempExamCode);
         formData.append('answerType', answerType);
         formData.append('questionImage', $('input[type=file]')[1].files[0]);
+        // debugger
         $.ajax("http://localhost:"+localStorage.getItem('server-port')+"/exam/question", {
             type: "POST",
             data: formData,
-            dataType: "json",
+            dataType: "JSON",
             headers: {
                 token: localStorage.getItem('token'),
                 Authorization: "Bearer "+localStorage.getItem('token')
             },
             contentType: false,
             processData: false,
-            success: function (data, status) {
+            success: function (data) {
                 document.getElementById("addtestQuestion").value = '';
                 // ("#addtestAnswer").value = '';
                 if (answerType == "multipleOption") {
@@ -234,6 +232,7 @@ $(document).ready(function () {
                     document.getElementById("addtestOption2").value = '';
                     document.getElementById("addtestOption3").value = '';
                     document.getElementById("addtestOption4").value = '';
+                    document.getElementById("myImage").value = ''
                     let checkBox = $('input[type=checkbox][name=option]')
                     $.each(checkBox, (i, chk) => {
                         if ($(chk).val()) {
@@ -245,6 +244,7 @@ $(document).ready(function () {
                     document.getElementById("addtestOption2G").value = '';
                     document.getElementById("addtestOption3G").value = '';
                     document.getElementById("addtestOption4G").value = '';
+                    document.getElementById("myImage").value = '';
                     if ($('input[type=radio][name=option1]:checked').val()) {
                         $('input[type=radio][name=option1]').prop('checked', false)
                     }
@@ -255,8 +255,9 @@ $(document).ready(function () {
                 console.log(error + " " + "error occurred");
             }
         });
+    })
 
-    }
+    // function validateForm(event) { }
 })
 
 //this uploads excel file
@@ -265,10 +266,10 @@ function excelUpload(event) {
     event.preventDefault();
     var formData = new FormData();
     formData.append('examCode', tempExamCode)
-    console.log(tempExamCode);
+   
     formData.append('excelFile', $('input[type=file]')[0].files[0])
     console.log(formData.get('excelFile'));
-    $.ajax('http://localhost:45728/exam/questions/uploadExcel', {
+    $.ajax("http://localhost:"+localStorage.getItem('server-port')+'/exam/questions/uploadExcel', {
         type: 'POST',
         data: formData,
         headers: {

@@ -17,6 +17,9 @@ node_modules
 obj/
 
 bin/
+
 Examportal.csproj
+
 appsettings.Development.json
+
 appsettings.json

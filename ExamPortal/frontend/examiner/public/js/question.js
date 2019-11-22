@@ -59,7 +59,7 @@ function updateQues(id,type) {
             formData.append('answerType', "multipleOption");
             formData.append('questionImage', $('input[type=file]')[0].files[0]);
             // return
-    $.ajax("http://localhost:"+localStorage.getItem('server-port')+"/exam/question/" + id, {
+    $.ajax("https://node-examportal.herokuapp.com/exam/question/" + id, {
         type: 'PATCH',
         dataType: 'json',
         contentType: false,
@@ -103,6 +103,9 @@ function editQuestion(id) {
                             $(chk).prop('checked',true)
                         }
                     })
+                if( data.questionImage != null && data.questionImage != undefined){
+                    document.getElementById("myImage").value = data.questionImage
+                }
             }else if( data.answerType=="singleOption"){
                 let editTemplate = $("#edit-single-option").html();
                 $("#display-edit-form").append(Mustache.render(editTemplate, data))

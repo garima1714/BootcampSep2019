@@ -65,6 +65,7 @@ function editDetails() {
     $.ajax("http://localhost:"+localStorage.getItem('server-port')+"/examiner", {
         type: 'PATCH',
         dataType: 'JSON',   
+        contentType : "application/json",
         headers: {
             "token": localStorage.getItem('token'),
              'Authorization': 'Bearer '+localStorage.getItem('token')

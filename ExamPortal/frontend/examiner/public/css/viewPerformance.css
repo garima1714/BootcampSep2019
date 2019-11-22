@@ -44,11 +44,15 @@
            width: 40%;
            font-weight: 400;
            border-top: 2px solid rgba(0, 0, 0, 0.5);
+           box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.2);
+
            /* margin-left: 9%; */
        }
        
        .student-detail-table {
            border-top: 10px solid black;
+           box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.2);
+
            margin-top: 30px;
            align-items: center;
        }
@@ -77,7 +81,7 @@
        }
        
        .performance-text {
-           margin-left: 27%;
+           text-align: center;
        }
        
        .cursor {
@@ -115,4 +119,17 @@
         width: 500px;
         height: 500px;
         margin: 0 auto;
+        }
+        @media (max-width: 760px) {
+            .performance-text{
+                margin-top: 20%;
+                font-size: 30px;
+            }
+            .performance-table{
+                width: 100%;
+            }
+            .student-detail-table{
+                width: 10%;
+            }
+           
         }

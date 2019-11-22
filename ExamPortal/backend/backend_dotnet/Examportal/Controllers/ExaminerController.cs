@@ -35,7 +35,6 @@ namespace Examportal.Controllers
             var exams = db.ExamDetails.Where(e => e.Email == userEmail).ToList();
             return Ok(exams);
         }
-        
         [Route("/examiner")]
         [HttpPatch]
         public IActionResult examinerUpdate([FromBody] UpdateExaminerCustomModel value)
@@ -50,7 +49,7 @@ namespace Examportal.Controllers
                 examinerData.Password = value.password;
                 db.Users.Update(examinerData);
                 db.SaveChanges();
-                return Ok("User updated");
+                return Ok(new { message = "User Updated" });
             }
             catch (Exception e )
             {
@@ -58,6 +57,34 @@ namespace Examportal.Controllers
             }
 
         }
+        [Route("/examiner/exams/students")]
+        [HttpGet]
+        public IActionResult allStudents()
+        {
+            Dictionary<string, string> email = new Dictionary<string, string>();
+
+            Authentication auth = new Authentication();
+            string examcode = HttpContext.Request.Headers["examId"].ToString();
+            var answers = db.CandidateAnswer.Where(e => e.TestCode == examcode && e.Answer!= null).Count();
+            var data = db.CandidateResult.Where(e => e.TestCode == examcode).ToList();
+           // var rev = data.OrderByDescending(x => x.Email).ToList();
+            var totalWeightage = db.Questions.Where(e => e.ExamCode == examcode).Sum(t => t.Weightage);
+
+            //var joinQuery = db.CandidateResult.Join(db.CandidateAnswer, )
+            var i = 0;
+            var len = data.Count();
+            List<Users> arr = new List<Users>();
+            while (i < len)
+            {
+                var stuEmail = data[i].Email;
+                var details = db.Users.FirstOrDefault(e => e.Email == stuEmail);
+               
+                arr.Add(details);
+                i++;
+            }
+            return Ok(new {a= arr , b=data, c=totalWeightage});
+        }
+
     }
 
 

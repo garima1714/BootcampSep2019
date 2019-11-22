@@ -14,6 +14,8 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using OfficeOpenXml;
 using System.Text;
+using System.Text.RegularExpressions;
+using Microsoft.Extensions.Configuration;
 
 namespace Examportal.Controllers
 {
@@ -21,6 +23,11 @@ namespace Examportal.Controllers
     [Route("/exam")]
     public class ExamController : ControllerBase
     {
+        IConfiguration configuration;
+        public ExamController(IConfiguration configuration)
+        {
+            this.configuration = configuration;
+        }
         ExamportalContext db = new ExamportalContext();
 
         [Route("accessKey")]
@@ -39,10 +46,10 @@ namespace Examportal.Controllers
                 return BadRequest();
             }
         }
-        
+
         [Authorize]
         [Route("accessKey")]
-        [HttpGet]        
+        [HttpGet]
         public IActionResult GetExamTime()
         {
             Authentication auth = new Authentication();
@@ -50,8 +57,8 @@ namespace Examportal.Controllers
             string examcode = HttpContext.Request.Headers["examCode"];
 
             var examData = db.ExamDetails.FirstOrDefault(s => s.ExamCode == examcode);
-            var submitExam = db.CandidateResult.FirstOrDefault(s=> s.TestCode == examcode && s.Email == header["Email"]);
-            if(submitExam!= null && submitExam.SubmitExam == 1)
+            var submitExam = db.CandidateResult.FirstOrDefault(s => s.TestCode == examcode && s.Email == header["Email"]);
+            if (submitExam != null && submitExam.SubmitExam == 1)
             {
                 return Ok(new { examData = examData, submitStatus = true });
             }
@@ -59,11 +66,10 @@ namespace Examportal.Controllers
             {
                 return Ok(new { examData = examData, submitStatus = false });
             }
-            
-            
+
+
         }
 
-        //[Authorize]
         [Route("endTest")]
         [HttpPost]
         public IActionResult SaveAllQuestions([FromBody] SubmitAnswerCustomModel value)
@@ -73,121 +79,64 @@ namespace Examportal.Controllers
             QuestionHandler qh = new QuestionHandler();
 
             email = auth.getAllClaims(HttpContext);
-            qh.submitAllQuestions(value,email);
-            
+            qh.submitAllQuestions(value, email);
+
             return Ok(true);
         }
-        //[Authorize]
-        [Route("/exam/question/{id}")]
-        [HttpDelete]
-        public IActionResult removeQuestions(int id)
+
+        [Authorize, HttpDelete,Route("/exam/question/{id}")]
+        
+        public IActionResult RemoveQuestions(int id)
         {
-            try
+            QuestionOperation question = new QuestionOperation();
+            if(question.RemoveQuestion(id))
             {
-                db.Questions.Remove(db.Questions.FirstOrDefault(e => e.Id == id));
-                db.SaveChanges();
-                return Ok();
+                return Ok(new {flag=true , msg = "deletion successfull", status = 200, });
             }
-
-
-            catch (Exception e)
-            {
-                return BadRequest(new { error = e });
-            }
+            return BadRequest(new { flag = false, msg = "data not found", status = 404 });
         }
 
-        [Route("/exam/{id}/question")]
-        [HttpGet]
-
-        public IActionResult viewQuestions(String id)
+        [Authorize,HttpGet,Route("/exam/{id}/question")]
+        
+        public IActionResult ViewQuestions(String id)
         {
             id = HttpUtility.UrlDecode(id);
-            try
-            {
-                var data = db.Questions.Where(e => e.ExamCode == id).Select(a => new {
-                    _id = a.Id,
-                    questionText = a.QuestionText,
-                    option1 = a.Option1,
-                    option2 = a.Option2,
-                    option3 = a.Option3,
-                    option4 = a.Option3,
-                    weightage = a.Weightage,
-                    answer = a.Answer,
-                    questionImage = a.QuestionImage
-                }).ToList();
-                return Ok(data);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(new { error = e });
-            }
+            QuestionOperation question = new QuestionOperation();
+            var data = question.ViewQuestion(id);
+                if ( data != null )
+                    return Ok(data);
+                else
+                return BadRequest(new { msg = "Not Found",status = 404 });
         }
-        [Route("/exam/question/{id}")]
-        [HttpGet]
 
-        public IActionResult editviewQuestions(int id)
+        [Authorize,HttpGet,Route("/exam/question/{id}")]    
+        public IActionResult EditviewQuestions(int id)
         {
-
-            try
-            {
-                var data = db.Questions.Where(e => e.Id == id).Select(a => new {
-                    _id = a.Id,
-                    questionText = a.QuestionText,
-                    option1 = a.Option1,
-                    option2 = a.Option2,
-                    option3 = a.Option3,
-                    option4 = a.Option3,
-                    weightage = a.Weightage,
-                    answer = a.Answer,
-                    answerType = a.AnswerType
-                }).FirstOrDefault();
-                return Ok(data);
-            }
-            catch (Exception e)
-            {
-                return BadRequest(new { error = e });
-            }
+            QuestionOperation question = new QuestionOperation();
+            ViewCustomModel data = question.EditViewQuestion(id);
+            if (data != null)
+            return Ok( data);
+            return BadRequest(new { msg = "data not found", status = 404 });
         }
-        [Route("/exam/question/{id}")]
-        [HttpPatch]
-
-        public IActionResult editQuestions(int id, [FromBody]Questions a)
-        {
-            try
-            {
-                var data = db.Questions.Where(s => s.Id == id).FirstOrDefault<Questions>();
-                data.QuestionText = a.QuestionText;
-                data.Option1 = a.Option1;
-                data.Option2 = a.Option2;
-                data.Option3 = a.Option3;
-                data.Option4 = a.Option3;
-                data.Weightage = a.Weightage;
-                data.Answer = a.Answer;
-                db.Questions.Update(data);
-                db.SaveChanges();
-                return Ok("User updated");
-            }
-            catch (Exception e)
-            {
-                return BadRequest(new { error = e });
-            }
-        }
-
-        [Route("/exam/question")]
-        [HttpPost]
-        public IActionResult uploadQuestion()
+        //update question
+        [Authorize,HttpPatch,Route("/exam/question/{id}")]
+        
+        public IActionResult editQuestions(int id)
         {
             try
             {
                 var req = HttpContext.Request.Form;
-                String path = Directory.GetCurrentDirectory();
-                //String dest = "C:\\Users\\himanshu.chauhan\\Desktop\\BootcampSep2019\\ExamPortal\frontend\\exminer\\public\\assets";
-                String dest = "e:/new-branch/ExamPortal/frontend/exminer/public/assets";
-                //String dest = "E:\examportal";
-                var file = HttpContext.Request.Form.Files != null && HttpContext.Request.Form.Count() > 0 ? HttpContext.Request.Form.Files[0]:null;
+
+                string currentpath = Directory.GetCurrentDirectory().ToString();
+                string parent = Directory.GetParent(currentpath).ToString();
+                string parentdirectory = Directory.GetParent(parent).ToString();
+                string root = Directory.GetParent(parentdirectory).ToString();
+                string dest = Path.Combine(root, "assets");
+
+                var file = req.Files != null && HttpContext.Request.Form.Files.Count() > 0 ? req.Files[0] : null;
+
                 String ImageURL = null;
-                //dest = dest + "\file.txt";
-                if( file != null )
+                if (file != null)
                 {
                     if (Directory.Exists(dest))
                     {
@@ -196,8 +145,11 @@ namespace Examportal.Controllers
                                           .Parse(file.ContentDisposition)
                                           .FileName
                                           .Trim('"');
-                        //filename = Path.Combine(dest, $@"{filename}");
-                        //filename = "E:\octaber.jpg";
+                       
+                        String date = DateTime.Now.ToString();
+
+                        date = Regex.Replace(date, @"s", "");
+
                         filename = dest + "\\" + filename;
 
                         using (FileStream fs = System.IO.File.Create(filename))
@@ -210,15 +162,26 @@ namespace Examportal.Controllers
 
                     }
                 }
-                Questions obj = new Questions();
-                obj.Answer = HttpContext.Request.Form["answer"];
-                obj.QuestionText = req["questionText"]; obj.Option1 = req["option1"]; obj.Option2 = req["option2"];
-                obj.Option3 = req["option3"]; obj.Option4 = req["option4"]; obj.ExamCode = req["examCode"];
-                obj.Weightage = Convert.ToInt32(req["weightage"]); obj.QuestionImage = ImageURL;obj.AnswerType = req["answerType"];
-                db.Questions.Add(obj);
-                db.SaveChanges();
+                var obj = db.Questions.FirstOrDefault(e => e.Id == id);
 
-                return Ok();
+                obj.Answer = req["answer"];
+
+                obj.QuestionText = req["questionText"]; obj.Option1 = req["option1"]; obj.Option2 = req["option2"];
+
+                obj.Option3 = req["option3"]; obj.Option4 = req["option4"];
+
+                obj.Weightage = Convert.ToInt32(req["weightage"]); obj.AnswerType = req["answerType"];
+
+                obj.ModifiedDate = DateTime.Now;
+
+                obj.QuestionImage = ImageURL != null ? ImageURL : obj.QuestionImage;
+
+                obj.ModifiedBy = obj.CreatedBy; obj.ExamCode = obj.ExamCode;
+
+                obj.CreatedBy = obj.CreatedBy; obj.CreatedDate = obj.CreatedDate;
+                   
+                db.SaveChanges();
+                return Ok(new { msg ="update successfull", status = 200});
             }
             catch (Exception e)
             {
@@ -226,9 +189,84 @@ namespace Examportal.Controllers
             }
         }
 
-        [Route("/exam/questions/uploadExcel")]
-        [HttpPost]
+        [Authorize,HttpPost, Route("/exam/question")]
+       //upload questions
+        public IActionResult UploadQuestion()
+        {            
+            try
+            {
+                var req = HttpContext.Request.Form;
 
+                string currentpath = Directory.GetCurrentDirectory().ToString();
+                string parent = Directory.GetParent(currentpath).ToString();
+                string parentdirectory = Directory.GetParent(parent).ToString();
+                string root = Directory.GetParent(parentdirectory).ToString();
+                string dest = Path.Combine(root, "assets");
+
+                var file = HttpContext.Request.Form.Files != null && HttpContext.Request.Form.Files.Count() > 0 ? HttpContext.Request.Form.Files[0] : null;
+
+                String imageURL = null;
+                if (file != null)
+                {
+                    if (Directory.Exists(dest))
+                    {
+
+                        var filename = ContentDispositionHeaderValue
+                                          .Parse(file.ContentDisposition)
+                                          .FileName
+                                          .Trim('"');
+                        String date = DateTime.Now.Ticks.ToString();
+                        String imageName = date + file.FileName;
+                        filename = dest + "\\" + date + filename;
+
+                        using (FileStream fs = System.IO.File.Create(filename))
+                        {
+                            file.CopyTo(fs);
+                            fs.Flush();
+                        }
+                   
+                        imageURL = "../../../assets/" + imageName;
+
+                    }
+                }
+                Dictionary<string, string> email = new Dictionary<string, string>();
+
+                Authentication auth = new Authentication();
+                email = auth.getAllClaims(HttpContext);
+
+                Questions obj = new Questions();
+
+                obj.Answer = req["answer"];
+
+                obj.QuestionText = req["questionText"];
+                obj.Option1 = req["option1"];
+                obj.Option2 = req["option2"];
+
+                obj.Option3 = req["option3"];
+                obj.Option4 = req["option4"];
+                obj.ExamCode = req["examCode"];
+
+                obj.Weightage = Convert.ToInt32(req["weightage"]);
+                obj.QuestionImage = imageURL;
+                obj.AnswerType = req["answerType"];
+
+                obj.CreatedDate = DateTime.Now;
+
+                obj.CreatedBy = db.Users.FirstOrDefault(u => u.Email == email["Email"]).Name;
+
+                db.Questions.Add(obj);
+                db.SaveChanges();
+
+                return Ok(new { msg = "question saved successfully" });
+            }
+            catch (Exception e)
+            {
+                return BadRequest(new { error = e });
+            }
+        }
+
+        [Authorize,HttpPost, Route("/exam/questions/uploadExcel")]
+        
         public async Task createDirectoryAsync()
         {
 
@@ -340,13 +378,7 @@ namespace Examportal.Controllers
                         }
                     }
                     return;
-
-
                 }
-
-                // create the directory.
-               
-
             }
             catch (Exception e)
             {

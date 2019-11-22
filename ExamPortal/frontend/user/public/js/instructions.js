@@ -1,5 +1,5 @@
 $(document).on('click', '.startTest', function() {
-    $.ajax('http://localhost:'+localStorage.getItem('server-port')+'/exam/accessKey', {
+    $.ajax("http://localhost:"+localStorage.getItem('server-port')+'/exam/accessKey', {
         type: 'GET',
         dataType: 'JSON',
         headers: {
@@ -10,13 +10,9 @@ $(document).on('click', '.startTest', function() {
         data: {
             examCode: localStorage.getItem("examCode")
         },
-        success: function(data) {
-            if (data.submitStatus) {
-                $('.error-msg').text("Test is already Submitted")
-            } else {
+        success: function() {
                 $(location).attr('href', './question.html')
-            }
-        },
+            },
         error: function(error) { console.log(error)}
     })
 
@@ -58,7 +54,6 @@ function checkTimeForTest(time,duration) {
             clearInterval(x)
             $('.startTest').attr('disabled')
             $('.error-msg').text("Test not started yet")
-            document.getElementById('leftTime').innerHTML = ""
         }
     }, 1000)
 
@@ -69,7 +64,7 @@ $(document).ready(function() {
     if(token == null){
         $(location).attr('href','./login.html')
     }
-    $.ajax('http://localhost:'+localStorage.getItem('server-port')+'/exam/accessKey', {
+    $.ajax("http://localhost:"+localStorage.getItem('server-port')+'/exam/accessKey', {
         type: 'GET',
         dataType: 'JSON',
         headers: {
